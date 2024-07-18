@@ -2,7 +2,6 @@ package problem1
 
 import (
 	"fmt"
-	"slices"
 )
 
 type Queue struct {
@@ -11,7 +10,7 @@ type Queue struct {
 
 func (q *Queue) Enqueue(v any) {
 	if q.IsEmpty() {
-		q.items = make([]any, 0, 2)
+		q.items = make([]any, 0)
 	}
 	q.items = append(q.items, v)
 }
@@ -23,7 +22,7 @@ func (q *Queue) Dequeue() (any, error) {
 
 	res := q.items[0]
 
-	q.items = slices.Delete(q.items, 0, 1)
+	q.items = q.items[1:]
 
 	return res, nil
 }
@@ -37,11 +36,7 @@ func (q *Queue) Peek() (any, error) {
 }
 
 func (q *Queue) IsEmpty() bool {
-	if len(q.items) > 0 {
-		return false
-	}
-
-	return true
+	return len(q.items) == 0
 }
 
 func (q *Queue) Size() int {
